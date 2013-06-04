@@ -21,14 +21,14 @@ while [ "$1" != "" ]; do
 done
 
 DATE=`date +'%Y-%m-%d'`
-HEAD="\n$TAG / $DATE \n==================\n\n"
+HEAD="$TAG / $DATE \n==================\n\n"
 
 if $LIST; then
   version=$(git describe --tags --abbrev=0 $(git rev-list --tags --max-count=1))
   if test -z "$version"; then
-    git log --pretty="format: * %s"
+	  git log --no-merges --pretty="format:* %s (%an)"
   else
-    git log --pretty="format: * %s" $version..
+	  git log --no-merges --pretty="format:* %s (%an)" $version..
   fi
   exit
 fi
@@ -44,6 +44,6 @@ tmp="/tmp/changelog"
 printf "$HEAD" > $tmp
 git-changelog --list >> $tmp
 printf '\n' >> $tmp
-if [ -f $CHANGELOG ]; then cat $CHANGELOG >> $tmp; fi
+if [ -f $CHANGELOG ]; then echo "" >> $tmp; cat $CHANGELOG >> $tmp; fi
 mv $tmp $CHANGELOG
 test -n "$EDITOR" && $EDITOR $CHANGELOG
