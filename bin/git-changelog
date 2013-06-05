@@ -43,7 +43,7 @@ if test "$CHANGELOG" = ""; then
 fi
 tmp="/tmp/changelog"
 printf "$HEAD" > $tmp
-git-changelog --list >> $tmp
+$0 --list >> $tmp
 printf '\n' >> $tmp
 if [ -f $CHANGELOG ]; then echo "" >> $tmp; cat $CHANGELOG >> $tmp; fi
 mv $tmp $CHANGELOG
