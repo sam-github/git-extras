@@ -1,0 +1,9 @@
+#!/bin/sh
+
+test -z $1 && echo "merge-rebase <name> required." && exit 1
+
+branch=$1
+git checkout $branch && \
+git rebase @{-1} && \
+git checkout @{-2} && \
+git merge @{-1}
