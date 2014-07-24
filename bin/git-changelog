@@ -21,7 +21,9 @@ while [ "$1" != "" ]; do
 done
 
 DATE=`date +'%Y-%m-%d'`
-HEAD="$DATE, Version $TAG\n\n"
+TITLE="$DATE, Version $TAG"
+UNDER="$(echo $TITLE | sed -e 's/./=/g')"
+HEAD="$TITLE\n$UNDER\n\n"
 
 if $LIST; then
 	lasttag=$(git rev-list --tags --max-count=1 2>/dev/null)
@@ -38,7 +40,7 @@ CHANGELOG=$FILE
 if test "$CHANGELOG" = ""; then
   CHANGELOG=`ls | egrep 'change|history' -i|head -n1`
   if test "$CHANGELOG" = ""; then
-    CHANGELOG='History.md';
+    CHANGELOG='CHANGES.md';
   fi
 fi
 tmp="/tmp/changelog"
